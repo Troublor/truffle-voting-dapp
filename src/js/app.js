@@ -9,12 +9,13 @@ App = {
   // Instance Web3
   initWeb3: function() {
     // Is there an injected web3 instance?
-    if (typeof web3 !== 'undefined') {
-      App.web3Provider = web3.currentProvider;
+    if (typeof window.ethereum !== 'undefined') {
+      window.ethereum.enable();
+      App.web3Provider = window.ethereum;
     } else {
       // If no injected web3 instance is detected, fall back to Ganache
       // Only useful in a development environment
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
     }
     web3 = new Web3(App.web3Provider);
     return App.initContract();
